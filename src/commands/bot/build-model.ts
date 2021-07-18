@@ -106,6 +106,7 @@ export default class BuildModel extends SfdxCommand {
     let buildModelBtn =  await page.$x("//button[contains(., 'Build Model')]");
     if (buildModelBtn) {
       await buildModelBtn[0].click();
+      await page.waitForTimeout(5 * 1000);
       if (this.flags.debug) {
         this.ux.log(`[${botId}:${botVersionId}] - Clicked Build Model`);
         await page.screenshot({
