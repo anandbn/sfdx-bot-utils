@@ -1,4 +1,4 @@
-bot-build-model
+bot-sfdx-utils
 ===============
 
 SFDX plugins for automation around Einstein Bots. These are tasks that are currently not exposed via the metadata api.
