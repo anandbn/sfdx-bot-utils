@@ -1,0 +1,13 @@
+{
+  "commandDescription": "A SFDX plugin to automate building the NLP model for a bot version",
+  "nameFlagDescription": "Bot name",
+  "botversionFlagDescription": "version to build model",
+  "debugFlagDescription":"For detailed logging",
+  "activateFlagDescription":"Activate the bot version",
+  "deactivateFlagDescription":"Deactivate the bot version",
+  "errorNoBotResults":"No bot matching %s found !!!",
+  "errorNoVersionFound":"No bot version for %s found",
+  "onlyOneStatus":"You can only use  -a / --activate or -d/--deactivate and not both",
+  "alreadyActive":"The bot version you are trying to activate is already active.",
+  "alreadyInactive":"The bot version you are trying to activate is already inactive."
+}
