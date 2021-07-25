@@ -84,10 +84,11 @@ __Parameters__
 ### Example
 
 ```
-$ sfdx bot:change-status -d -n MyFirstBot -b v2 --debug -u mydevorg
+$ sfdx bot:list-versions -n MyFirstBot --debug -u mydevorg
 
-Found Bot 0Xx5e000000kMlkYAE, Version#2: 0Xx5e000000kMlkYAE , Status: Active
-[0Xx5e000000kMlkYAE:0Xx5e000000kMlkYAE] - Logged into Setup
-[0Xx5e000000kMlkYAE:0X95e000000l4qrCAA] - Clicked Deactivate Button
-[0Xx5e000000kMlkYAE:0X95e000000l4qrCAA] - Confirmed deactivation Button
+Developer Name  VersionNumber  Status
+──────────────  ─────────────  ────────
+v4              4              Inactive
+v5              5              Inactive
+v7              7              Active
 ```
