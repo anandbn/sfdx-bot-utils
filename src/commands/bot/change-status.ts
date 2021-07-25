@@ -1,5 +1,5 @@
 import { flags, SfdxCommand } from '@salesforce/command';
-import { Connection, Messages, SfdxError } from '@salesforce/core';
+import { Messages, SfdxError } from '@salesforce/core';
 import { AnyJson } from '@salesforce/ts-types';
 
 // Initialize Messages with the current plugin directory
@@ -78,12 +78,14 @@ export default class ChangeStatus extends SfdxCommand {
     if(this.flags.deactivate && botStatus == 'Inactive'){
       throw new SfdxError(messages.getMessage('alreadyInactive'));
     }
-    await this.changeBotStatus(botId, botVerId,botStatus);
+    await this.changeBotStatus(this.flags.name, versionNumber, botId, botVerId);
     // Return an object to be displayed with --json
     return { "status": "ok" };
   }
 
-  async changeBotStatus(botId: string, botVersionId: string,botStatus:string) {
+  async changeBotStatus(botName:string, versionNumber:string, botId: string, botVersionId: string) {
+    
+    const timestamp:string = `${this.flags.activate?'Activate':''}${this.flags.deactivate?'Deactivate':''}_${botName}_v${versionNumber}_${new Date().toISOString()}`;
     const conn = this.org.getConnection();
     let browser = await puppeteer.launch({
       headless: true,
@@ -98,7 +100,7 @@ export default class ChangeStatus extends SfdxCommand {
     if (this.flags.debug) {
       this.ux.log(`[${botId}:${botVersionId}] - Logged into Setup`);
       await page.screenshot({
-        path: "./tmp/after_login_botbuilder.png",
+        path: `./tmp/${timestamp}_after_login_botbuilder.png`,
         fullPage: true
 
       });
@@ -110,8 +112,10 @@ export default class ChangeStatus extends SfdxCommand {
         await botActivateBtn[0].click();
         if (this.flags.debug) {
           this.ux.log(`[${botId}:${botVersionId}] - Clicked Activate Button`);
+          await page.waitForTimeout(5 * 1000);
+ 
           await page.screenshot({
-            path: "./tmp/after_botactivate_clicked.png",
+            path: `./tmp/${timestamp}_after_botactivate_clicked.png`,
             fullPage: true
 
           });
@@ -125,7 +129,7 @@ export default class ChangeStatus extends SfdxCommand {
         if (this.flags.debug) {
           this.ux.log(`[${botId}:${botVersionId}] - Clicked Deactivate Button`);
           await page.screenshot({
-            path: "./tmp/after_botdeactivate_clicked.png",
+            path: `./tmp/${timestamp}_after_botdeactivate_clicked.png`,
             fullPage: true
 
           });
@@ -137,7 +141,7 @@ export default class ChangeStatus extends SfdxCommand {
           if (this.flags.debug) {
             this.ux.log(`[${botId}:${botVersionId}] - Confirmed deactivation Button`);
             await page.screenshot({
-              path: "./tmp/after_botconfirm_clicked.png",
+              path: `./tmp/${timestamp}_after_botconfirm_clicked.png`,
               fullPage: true
             });
           }
