@@ -63,8 +63,8 @@ export default class ChangeStatus extends SfdxCommand {
     if (this.flags.botversion) {
       result = await conn.query<IdAndName>(`SELECT Id,DeveloperName,VersionNumber,Status FROM BotVersion where BotDefinitionId='${botId}' and DeveloperName='${this.flags.botversion}'`);
     } else {
-      this.ux.log(`No version specified. Looking for the active version`);
-      result = await conn.query<IdAndName>(`SELECT Id,DeveloperName,VersionNumber,Status FROM BotVersion where BotDefinitionId='${botId}' and Status='Active'`);
+      this.ux.log(`No version specified. Looking for latest version (highest version number)`);
+      result = await conn.query<IdAndName>(`SELECT Id,DeveloperName,VersionNumber,Status FROM BotVersion where BotDefinitionId='${botId}' order by VersionNumber desc limit 1`);
 
     }
     if (!result.records || result.records.length <= 0) {
