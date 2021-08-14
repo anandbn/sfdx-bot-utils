@@ -92,6 +92,7 @@ export default class ListVersions extends SfdxCommand {
         ]
       }
       this.ux.table(dialogs, tableColumnData);
+      
       return dialogs;
     }
     return null;
