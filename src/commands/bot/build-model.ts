@@ -46,8 +46,8 @@ export default class BuildModel extends SfdxCommand {
 
   public async run(): Promise<AnyJson> {
     const conn = this.org.getConnection();
-    if (this.flags.debug && !fs.existsSync('./tmp')) {
-      fs.mkdirSync('./tmp');
+    if (this.flags.debug && !fs.existsSync('tmp')) {
+      fs.mkdirSync('tmp');
     }
 
     let result = await conn.query<IdAndName>(`SELECT DeveloperName,Id  FROM BotDefinition where DeveloperName='${this.flags.name}'`);
